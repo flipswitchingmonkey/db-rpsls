@@ -36,8 +36,65 @@ const stateObject: StateObject = {
     score: 0,
     selected: null,
   },
-  round: 0,
+  round: 1,
   result: null,
+}
+
+function isStateObject(stateObject: unknown): stateObject is StateObject {
+  const candidate = stateObject as StateObject
+  return (
+    candidate.playerOne != null &&
+    candidate.playerTwo != null &&
+    candidate.round != null &&
+    candidate.result !== undefined
+  )
+}
+
+export function loadStateFromLocalStorage() {
+  const storedState = localStorage.getItem('state')
+  try {
+    if (storedState != null) {
+      const parsedState = JSON.parse(storedState) as unknown
+      if (isStateObject(parsedState)) {
+        Object.assign(stateObject, parsedState)
+      }
+    }
+  } catch {
+    // do nothing
+  }
+}
+
+// on first run, read from localStorage
+loadStateFromLocalStorage()
+
+export function saveStateToLocalStorage() {
+  stateObject.playerOne.selected = null
+  stateObject.playerTwo.selected = null
+  stateObject.result = null
+  localStorage.setItem('state', JSON.stringify(stateObject))
+}
+
+export function resetState() {
+  stateObject.playerOne = {
+    name: 'Player One',
+    isHuman: true,
+    score: 0,
+    selected: null,
+  }
+  stateObject.playerTwo = {
+    name: 'Player Two',
+    isHuman: false,
+    score: 0,
+    selected: null,
+  }
+  stateObject.round = 1
+  stateObject.result = null
+  // trigger state-updated event
+  State.playerOne = stateObject.playerOne
+  State.playerTwo = stateObject.playerTwo
+  State.round = stateObject.round
+  State.result = null
+  saveStateToLocalStorage()
 }
 
 export const State = new Proxy(stateObject, {

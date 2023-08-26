@@ -1,6 +1,6 @@
 import { ComputerIterations, ComputerIterationsDelay, ResultType, SelectionType } from './constants'
 import type { PlayIconNames } from './icons'
-import { State, increaseRound } from './state'
+import { State, increaseRound, saveStateToLocalStorage } from './state'
 
 export function playThisRound() {
   State.result = null
@@ -15,13 +15,12 @@ export function playThisRound() {
 }
 
 /**
- * Returns the result of the current round from the perspective of player one.
+ * Calculates the result of the current round from the perspective of player one.
  * Follows the rules of Rock, Paper, Scissors, Lizard, Spock as described here:
  * https://en.wikipedia.org/wiki/Rock_paper_scissors#Additional_weapons
  */
 export function evalCurrentState(): void {
   const currentResult = evalSelection(State.playerOne.selected, State.playerTwo.selected)
-  console.log(`Result: ${currentResult}`)
   State.result = currentResult
   if (currentResult === null) {
     return
@@ -32,7 +31,7 @@ export function evalCurrentState(): void {
     State.playerTwo = { ...State.playerTwo, score: State.playerTwo.score + 1 }
   }
   increaseRound()
-  console.log(State.playerOne.score, State.playerTwo.score)
+  saveStateToLocalStorage()
 }
 
 export function evalSelection(
