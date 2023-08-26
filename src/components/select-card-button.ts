@@ -43,6 +43,14 @@ function getStyle(side: 'left' | 'right', indent: string, flip: '-' | '', active
       margin: 0;
       transform: scale(1.0, 1.0);
     }
+
+      ${
+        active
+          ? `.icon:hover {
+    transform: scale(1.1, 1.1);
+  }`
+          : ''
+      }
   }
   `
   return style
@@ -57,16 +65,6 @@ export class SelectCardButton extends BaseSvgButton {
       setPlayerSelectedCard(this.player, this.iconName)
       playThisRound()
     }
-    // window.addEventListener('state-updated', (event): void => {
-    //   if (
-    //     (event as StateUpdatedEvent).detail?.property === this.player &&
-    //     Boolean((event as StateUpdatedEvent).detail?.value) &&
-    //     ((event as StateUpdatedEvent).detail?.value as PlayerState).isHuman != null
-    //   ) {
-    //     console.log(`SelectCardButton: ${this.player} isHuman changed.`)
-    //     this.active = State[this.player].isHuman
-    //   }
-    // })
   }
 
   connectedCallback() {

@@ -9,7 +9,7 @@ template.innerHTML = /* html */ `
       flex-direction: column;
     }
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 800px) {
       .button-column {
         display: flex;
         flex-direction: row;

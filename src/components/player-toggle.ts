@@ -33,15 +33,6 @@ h1 {
   text-decoration: underline;
   font-style: italic;
 }
-
-/* @media only screen and (max-width: 600px) {
-  .wrapper {
-    flex-direction: row;
-    width: 100vw;
-    justify-content: space-around;
-  }
-} */
-
   </style>
   <div class="wrapper">
     <h1 id="title">Player One</h1>

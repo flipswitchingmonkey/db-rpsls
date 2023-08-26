@@ -45,7 +45,7 @@ template.innerHTML = /* html */ `
   color: #FFF;
   background-color: #134f55;
   font-size: 2.5rem;
-  width: 600px;
+  width: 400px;
   height: 200px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

@@ -3,7 +3,7 @@ import type { PlayIconNames } from '../icons'
 import type { PlayerState, StateUpdatedEvent } from '../state'
 import { BaseSvgButton } from './base-svg-button'
 
-function getStyle(side: 'left' | 'right', flip: '-' | '') {
+function getStyle(flip: '-' | '') {
   const style = document.createElement('style')
   style.textContent = /* css */ `
 .wrapper {
@@ -56,10 +56,9 @@ export class SelectedCardButton extends BaseSvgButton {
   }
 
   connectedCallback() {
-    const side = this.player === PlayerNumber.One ? 'left' : 'right'
     const flip = this.player === PlayerNumber.One ? '-' : ''
     super.connectedCallback()
-    this.shadowRoot?.append(getStyle(side, flip))
+    this.shadowRoot?.append(getStyle(flip))
   }
 }
 
