@@ -1,0 +1,140 @@
+html {
+  display: flex;
+  background-color: #087e8b;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main {
+  width: 800px;
+}
+
+h1 {
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.h1small {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.players {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.players-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.players-inner > #player-name {
+  display: flex;
+  height: 80px;
+}
+.players-inner > #player-card {
+  display: flex;
+  height: 200px;
+}
+.players-inner > #player-score {
+  display: flex;
+  height: 80px;
+}
+
+#round {
+  margin-top: 110px;
+}
+
+#midsection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.modal-container {
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal-visible {
+  visibility: visible !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+@media only screen and (max-width: 800px) {
+  .main {
+    width: 400px;
+  }
+
+  .players {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  .players-inner.playerOne {
+    display: flex;
+    align-items: center;
+    margin: 10px 15px;
+  }
+
+  .players-inner.playerOne {
+    flex-direction: row;
+  }
+
+  .players-inner.playerTwo {
+    flex-direction: row-reverse;
+  }
+
+  .players-inner > #player-name {
+    display: flex;
+    height: 80px;
+  }
+
+  .players-inner > #player-card {
+    display: flex;
+    height: 150px;
+  }
+
+  .players-inner.playerOne > #player-score {
+    position: absolute;
+    bottom: 0px;
+  }
+
+  .players-inner.playerTwo > #player-score {
+    position: absolute;
+    bottom: 0px;
+  }
+
+  #midsection {
+    position: absolute;
+    bottom: -10px;
+    transform: scale(0.8);
+  }
+}
