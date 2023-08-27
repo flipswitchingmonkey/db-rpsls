@@ -4,19 +4,6 @@ import { State, resetRound } from '../state';
 const template = document.createElement('template');
 template.innerHTML = /* html */ `
   <style>
-.wrapper {
-  color: #FFF;
-  transition: all 0.5s ease;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-style: italic;
-  margin-top: -80px;
-}
-
 .modal-container {
   display: flex;
   visibility: hidden;
@@ -121,35 +108,32 @@ export class ShowResult extends HTMLElement {
     }
     const modalContainer = this.shadowRoot?.querySelector('.modal-container');
     const elementResult = this.shadowRoot?.querySelector('#show-result');
-    const icon1 = this.shadowRoot?.querySelector('#icon1');
-    const icon2 = this.shadowRoot?.querySelector('#icon2');
-    if (modalContainer != null) {
-      modalContainer.classList.add('modal-visible');
-    }
-    if (elementResult != null) {
+    const resultIcons = this.shadowRoot?.querySelector('.result-icons');
+    if (resultIcons && elementResult) {
+      let classesIcon1 = '';
+      let classesIcon2 = '';
       switch (State.result) {
         case 'win':
-          icon1?.classList.remove('lose');
-          icon1?.classList.add('win');
-          icon2?.classList.remove('win');
-          icon2?.classList.add('lose');
+          classesIcon1 = 'win';
+          classesIcon2 = 'lose';
           elementResult.textContent = `${State.playerOne.name} wins!`;
           break;
         case 'lose':
-          icon1?.classList.remove('win');
-          icon1?.classList.add('lose');
-          icon2?.classList.remove('lose');
-          icon2?.classList.add('win');
+          classesIcon1 = 'lose';
+          classesIcon2 = 'win';
           elementResult.textContent = `${State.playerTwo.name} wins!`;
           break;
         case 'tie':
-          icon1?.classList.remove('win');
-          icon1?.classList.remove('lose');
-          icon2?.classList.remove('win');
-          icon2?.classList.remove('lose');
           elementResult.textContent = "It's a tie!";
           break;
       }
+      resultIcons.innerHTML = `
+        <base-svg-button id="icon1" class="result-icon ${classesIcon1}" data-icon="${State.playerOne.selected}"></base-svg-button>
+        <base-svg-button id="icon2" class="result-icon ${classesIcon2}" data-icon="${State.playerTwo.selected}"></base-svg-button>
+      `;
+    }
+    if (modalContainer != null) {
+      modalContainer.classList.add('modal-visible');
     }
   }
 }
