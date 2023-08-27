@@ -1,6 +1,6 @@
 import { ComputerIterations, ComputerIterationsDelay, ResultType, SelectionType } from './constants'
-import type { PlayIconNames } from './icons'
-import { State, increaseRound, saveStateToLocalStorage } from './state'
+import type { AllIconNames } from './icons'
+import { State, increaseRound, saveStateToLocalStorage, snapshotState } from './state'
 
 export function playThisRound() {
   State.result = null
@@ -31,12 +31,13 @@ export function evalCurrentState(): void {
     State.playerTwo = { ...State.playerTwo, score: State.playerTwo.score + 1 }
   }
   increaseRound()
+  snapshotState()
   saveStateToLocalStorage()
 }
 
 export function evalSelection(
-  p1: SelectionType | PlayIconNames | null,
-  p2: SelectionType | PlayIconNames | null,
+  p1: SelectionType | AllIconNames | null,
+  p2: SelectionType | AllIconNames | null,
 ): ResultType | null {
   // early return if either player has not selected
   if (p1 == null || p2 == null) {
@@ -103,7 +104,10 @@ export function evalSelection(
   return null
 }
 
-function generateRandomNonRepeatingNumbers(length: number, max: number): number[] {
+export function generateRandomNonRepeatingNumbers(length: number, max: number): number[] {
+  if (max < 2) {
+    throw new Error('max must be greater than 1')
+  }
   const arr: number[] = []
   while (arr.length < length) {
     const num = Math.floor(Math.random() * max)

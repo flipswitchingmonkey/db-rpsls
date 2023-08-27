@@ -54,10 +54,37 @@ template.innerHTML = /* html */ `
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.result-icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.result-icon {
+  width: 80px;
+  height: 80px;
+  padding: 5px 15px;
+}
+
+.win {
+  transform: scale(1.1);
+}
+
+.lose {
+  transform: scale(0.9);
+  filter: grayscale(100%);
+}
+
+
+
   </style>
   <div class="modal-container">
     <div class="modal">
-      <span id="show-result">Test</span>
+      <div class="result-icons">
+        <base-svg-button id="icon1" class="result-icon" data-icon="rock"></base-svg-button>
+        <base-svg-button id="icon2" class="result-icon" data-icon="paper"></base-svg-button>
+      </div>
+      <span id="show-result">Result</span>
     </div>
   </div>
 `
@@ -93,18 +120,32 @@ export class ShowResult extends HTMLElement {
     }
     const modalContainer = this.shadowRoot?.querySelector('.modal-container')
     const elementResult = this.shadowRoot?.querySelector('#show-result')
+    const icon1 = this.shadowRoot?.querySelector('#icon1')
+    const icon2 = this.shadowRoot?.querySelector('#icon2')
     if (modalContainer != null) {
       modalContainer.classList.add('modal-visible')
     }
     if (elementResult != null) {
       switch (State.result) {
         case 'win':
+          icon1?.classList.remove('lose')
+          icon1?.classList.add('win')
+          icon2?.classList.remove('win')
+          icon2?.classList.add('lose')
           elementResult.textContent = `${State.playerOne.name} wins!`
           break
         case 'lose':
+          icon1?.classList.remove('win')
+          icon1?.classList.add('lose')
+          icon2?.classList.remove('lose')
+          icon2?.classList.add('win')
           elementResult.textContent = `${State.playerTwo.name} wins!`
           break
         case 'tie':
+          icon1?.classList.remove('win')
+          icon1?.classList.remove('lose')
+          icon2?.classList.remove('win')
+          icon2?.classList.remove('lose')
           elementResult.textContent = "It's a tie!"
           break
       }

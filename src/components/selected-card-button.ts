@@ -1,5 +1,5 @@
 import { DefaultIconName, PlayerNumber } from '../constants'
-import type { PlayIconNames } from '../icons'
+import type { AllIconNames } from '../icons'
 import type { PlayerState, StateUpdatedEvent } from '../state'
 import { BaseSvgButton } from './base-svg-button'
 
@@ -48,8 +48,7 @@ export class SelectedCardButton extends BaseSvgButton {
         const selectedName =
           ((event as StateUpdatedEvent).detail?.value as PlayerState).selected == null
             ? DefaultIconName
-            : (((event as StateUpdatedEvent).detail?.value as PlayerState)
-                .selected as PlayIconNames)
+            : (((event as StateUpdatedEvent).detail?.value as PlayerState).selected as AllIconNames)
         this.swapIcon(selectedName)
       }
     })

@@ -62,4 +62,4 @@ export const PlayIconsSVGs: {
   },
 } as const
 
-export type PlayIconNames = keyof typeof PlayIconsSVGs
+export type AllIconNames = keyof typeof PlayIconsSVGs

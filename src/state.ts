@@ -1,11 +1,11 @@
 import { PlayerNumber, type SelectionType } from './constants'
-import type { PlayIconNames } from './icons'
+import type { AllIconNames } from './icons'
 
 export interface PlayerState {
   name: string
   isHuman: boolean
   score: number
-  selected: null | SelectionType | PlayIconNames
+  selected: null | SelectionType | AllIconNames
 }
 
 export interface StateObject {
@@ -13,6 +13,7 @@ export interface StateObject {
   playerTwo: PlayerState
   round: number
   result: null | string
+  history: string[]
   [key: string]: unknown
 }
 
@@ -38,6 +39,7 @@ const stateObject: StateObject = {
   },
   round: 1,
   result: null,
+  history: [],
 }
 
 function isStateObject(stateObject: unknown): stateObject is StateObject {
@@ -87,6 +89,7 @@ export function resetState() {
     score: 0,
     selected: null,
   }
+  stateObject.history = []
   stateObject.round = 1
   stateObject.result = null
   // trigger state-updated event
@@ -125,7 +128,7 @@ export function setPlayerScore(player: PlayerNumber, score: number) {
 }
 export function setPlayerSelectedCard(
   player: PlayerNumber,
-  selected: PlayIconNames | SelectionType | null,
+  selected: AllIconNames | SelectionType | null,
 ) {
   State[player] = { ...State[player], selected }
 }
@@ -140,4 +143,9 @@ export function resetRound() {
   State.result = null
   setPlayerSelectedCard(PlayerNumber.One, null)
   setPlayerSelectedCard(PlayerNumber.Two, null)
+}
+
+export function snapshotState() {
+  const snapshot = JSON.stringify({ ...stateObject, history: [] })
+  State.history.push(snapshot)
 }

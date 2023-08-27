@@ -1,11 +1,11 @@
 import { DefaultIconName, PlayerNumber } from '../constants.js'
-import type { PlayIconNames, SvgIcon } from '../icons.js'
+import type { AllIconNames, SvgIcon } from '../icons.js'
 import { PlayIconsSVGs } from '../icons.js'
 
 export class BaseSvgButton extends HTMLElement {
   player: PlayerNumber
   active = true
-  iconName: PlayIconNames = DefaultIconName
+  iconName: AllIconNames = DefaultIconName
 
   constructor() {
     super()
@@ -40,7 +40,7 @@ export class BaseSvgButton extends HTMLElement {
     return icon
   }
 
-  swapIcon(newIconName: PlayIconNames) {
+  swapIcon(newIconName: AllIconNames) {
     this.iconName = newIconName
     const playIcon = PlayIconsSVGs[this.iconName]
     const wrapper = this.shadowRoot?.querySelector('.wrapper')
@@ -63,7 +63,7 @@ export class BaseSvgButton extends HTMLElement {
     wrapper.setAttribute('class', 'wrapper')
 
     const dataIcon = this.hasAttribute('data-icon')
-      ? (this.getAttribute('data-icon') as PlayIconNames)
+      ? (this.getAttribute('data-icon') as AllIconNames)
       : DefaultIconName
 
     this.shadowRoot?.append(wrapper)

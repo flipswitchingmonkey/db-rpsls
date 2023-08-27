@@ -11,4 +11,9 @@ export default defineConfig({
       minify: true,
     },
   },
+  test: {
+    environment: 'jsdom',
+    include: ['src/**/*.spec.ts', 'tests/specs/**/*.spec.ts'],
+    exclude: ['tests/e2e/**/*.spec.tsx'],
+  },
 })

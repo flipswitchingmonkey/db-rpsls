@@ -10,9 +10,13 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {
+    "@playwright/test": "^1.37.1",
+    "@types/node": "^20.5.6",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@vitest/coverage-v8": "^0.34.3",
     "eslint": "^8.48.0",
@@ -20,6 +24,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
+    "jsdom": "^22.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-eslint": "^1.8.1",
