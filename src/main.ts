@@ -2,16 +2,17 @@ import { ComputerIterations, ComputerIterationsDelay, ResultType, SelectionType 
 import type { AllIconNames } from './icons'
 import { State, increaseRound, saveStateToLocalStorage, snapshotState } from './state'
 
-export function playThisRound() {
+export function playThisRound(): boolean {
   State.result = null
   if (
     (State.playerOne.isHuman && State.playerOne.selected == null) ||
     (State.playerTwo.isHuman && State.playerTwo.selected == null)
   ) {
     console.log('Both players must select an icon before playing a round.')
-    return
+    return false
   }
   computerSelectsRandom()
+  return true
 }
 
 /**
@@ -30,8 +31,8 @@ export function evalCurrentState(): void {
   } else if (currentResult === ResultType.Lose) {
     State.playerTwo = { ...State.playerTwo, score: State.playerTwo.score + 1 }
   }
-  increaseRound()
   snapshotState()
+  increaseRound()
   saveStateToLocalStorage()
 }
 
@@ -118,11 +119,16 @@ export function generateRandomNonRepeatingNumbers(length: number, max: number): 
   return arr
 }
 
-export function computerSelectsRandom() {
+/**
+ * Selects a random icon for each computer player, and evaluates the current state.
+ * Returns true if either player is a computer, false otherwise.
+ * @returns {boolean}
+ */
+export function computerSelectsRandom(): boolean {
   // if both players are human, evaluate the current state immediately
   if (State.playerOne.isHuman && State.playerTwo.isHuman) {
     evalCurrentState()
-    return
+    return false
   }
   let counter = 0
   const maxIterations = ComputerIterations
@@ -154,4 +160,5 @@ export function computerSelectsRandom() {
       evalCurrentState()
     }
   }, ComputerIterationsDelay)
+  return true
 }

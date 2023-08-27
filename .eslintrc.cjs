@@ -29,6 +29,8 @@ module.exports = {
         '@typescript-eslint/space-before-function-paren': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/comma-dangle': 'off',
+        '@typescript-eslint/strict-boolean-expressions': 'off',
+        '@typescript-eslint/semi': 'off',
         '@typescript-eslint/consistent-type-imports': [
           'error',
           {
@@ -41,4 +43,4 @@ module.exports = {
   ],
   parserOptions: {},
   rules: {},
-}
+};

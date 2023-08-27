@@ -42,7 +42,7 @@ const stateObject: StateObject = {
   history: [],
 }
 
-function isStateObject(stateObject: unknown): stateObject is StateObject {
+export function isStateObject(stateObject: unknown): stateObject is StateObject {
   const candidate = stateObject as StateObject
   return (
     candidate.playerOne != null &&

@@ -7,6 +7,7 @@
     <title>Rock Paper Scissors and then some</title>
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="/src/components/test-button.ts"></script>
+    <script type="module" src="/src/components/base-button.ts"></script>
     <script type="module" src="/src/components/base-svg-button.ts"></script>
     <script type="module" src="/src/components/select-card-button.ts"></script>
     <script type="module" src="/src/components/selected-card-button.ts"></script>
@@ -16,6 +17,7 @@
     <script type="module" src="/src/components/show-round.ts"></script>
     <script type="module" src="/src/components/show-result.ts"></script>
     <script type="module" src="/src/components/reset-state-button.ts"></script>
+    <script type="module" src="/src/components/show-history.ts"></script>
     <script defer type="module" src="/src/main.ts"></script>
   </head>
   <body>
@@ -23,7 +25,10 @@
     <div class="container">
       <h1>Rock Paper Scissors</h1>
       <span class="h1small">and some more</span>
-      <reset-state-button></reset-state-button>
+      <div style="display: flex;">
+        <reset-state-button></reset-state-button>
+        <show-history></show-history>
+      </div>
       <div class="main">
         <div class="players">
           <player-button-column data-player="playerOne" data-active="true"></player-button-column>

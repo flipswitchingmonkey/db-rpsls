@@ -1,7 +1,7 @@
-import type { StateUpdatedEvent } from '../state'
-import { State, resetRound } from '../state'
+import type { StateUpdatedEvent } from '../state';
+import { State, resetRound } from '../state';
 
-const template = document.createElement('template')
+const template = document.createElement('template');
 template.innerHTML = /* html */ `
   <style>
 .wrapper {
@@ -29,12 +29,14 @@ template.innerHTML = /* html */ `
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
 }
 
 .modal-visible {
   visibility: visible !important;
   width: 100vw !important;
   height: 100vh !important;
+  z-index: 1000;
 }
 
 .modal {
@@ -87,70 +89,69 @@ template.innerHTML = /* html */ `
       <span id="show-result">Result</span>
     </div>
   </div>
-`
+`;
 
 export class ShowResult extends HTMLElement {
   constructor() {
-    super()
+    super();
     window.addEventListener('state-updated', (event) => {
       if ((event as StateUpdatedEvent).detail?.property === 'result') {
-        this.setResult()
+        this.setResult();
       }
-    })
+    });
   }
 
   connectedCallback() {
-    this.attachShadow({ mode: 'open' })
-    const clonedTemplate = template.content.cloneNode(true)
-    this.shadowRoot?.appendChild(clonedTemplate)
+    this.attachShadow({ mode: 'open' });
+    const clonedTemplate = template.content.cloneNode(true);
+    this.shadowRoot?.appendChild(clonedTemplate);
 
-    const modal = this.shadowRoot?.querySelector('.modal-container')
+    const modal = this.shadowRoot?.querySelector('.modal-container');
     modal?.addEventListener('click', () => {
-      console.log('click')
-      resetRound()
-      modal.classList.remove('modal-visible')
-    })
+      resetRound();
+      modal.classList.remove('modal-visible');
+    });
 
-    this.setResult()
+    this.setResult();
   }
 
   setResult() {
     if (State.result == null) {
-      return
+      return;
     }
-    const modalContainer = this.shadowRoot?.querySelector('.modal-container')
-    const elementResult = this.shadowRoot?.querySelector('#show-result')
-    const icon1 = this.shadowRoot?.querySelector('#icon1')
-    const icon2 = this.shadowRoot?.querySelector('#icon2')
+    const modalContainer = this.shadowRoot?.querySelector('.modal-container');
+    const elementResult = this.shadowRoot?.querySelector('#show-result');
+    const icon1 = this.shadowRoot?.querySelector('#icon1');
+    const icon2 = this.shadowRoot?.querySelector('#icon2');
     if (modalContainer != null) {
-      modalContainer.classList.add('modal-visible')
+      modalContainer.classList.add('modal-visible');
     }
     if (elementResult != null) {
       switch (State.result) {
         case 'win':
-          icon1?.classList.remove('lose')
-          icon1?.classList.add('win')
-          icon2?.classList.remove('win')
-          icon2?.classList.add('lose')
-          elementResult.textContent = `${State.playerOne.name} wins!`
-          break
+          icon1?.classList.remove('lose');
+          icon1?.classList.add('win');
+          icon2?.classList.remove('win');
+          icon2?.classList.add('lose');
+          elementResult.textContent = `${State.playerOne.name} wins!`;
+          break;
         case 'lose':
-          icon1?.classList.remove('win')
-          icon1?.classList.add('lose')
-          icon2?.classList.remove('lose')
-          icon2?.classList.add('win')
-          elementResult.textContent = `${State.playerTwo.name} wins!`
-          break
+          icon1?.classList.remove('win');
+          icon1?.classList.add('lose');
+          icon2?.classList.remove('lose');
+          icon2?.classList.add('win');
+          elementResult.textContent = `${State.playerTwo.name} wins!`;
+          break;
         case 'tie':
-          icon1?.classList.remove('win')
-          icon1?.classList.remove('lose')
-          icon2?.classList.remove('win')
-          icon2?.classList.remove('lose')
-          elementResult.textContent = "It's a tie!"
-          break
+          icon1?.classList.remove('win');
+          icon1?.classList.remove('lose');
+          icon2?.classList.remove('win');
+          icon2?.classList.remove('lose');
+          elementResult.textContent = "It's a tie!";
+          break;
       }
     }
   }
 }
 
-customElements.define('show-result', ShowResult)
+customElements.define('show-result', ShowResult);
