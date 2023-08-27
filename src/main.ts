@@ -119,6 +119,11 @@ export function generateRandomNonRepeatingNumbers(length: number, max: number): 
 }
 
 export function computerSelectsRandom() {
+  // if both players are human, evaluate the current state immediately
+  if (State.playerOne.isHuman && State.playerTwo.isHuman) {
+    evalCurrentState()
+    return
+  }
   let counter = 0
   const maxIterations = ComputerIterations
   const selectionValues = Object.values(SelectionType)
