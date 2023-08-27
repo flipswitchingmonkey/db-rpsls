@@ -31,7 +31,7 @@
       </div>
       <div class="main">
         <div class="players">
-          <player-button-column data-player="playerOne" data-active="true"></player-button-column>
+          <player-button-column data-player="playerOne" data-active="true" data-testid="player-column-1"></player-button-column>
           <div class="players-inner playerOne">
             <player-toggle id="player-name" data-player="playerOne"></player-toggle>
             <selected-card-button id="player-card" data-player="playerOne"></selected-card-button>
@@ -46,7 +46,7 @@
             <selected-card-button id="player-card" data-player="playerTwo"></selected-card-button>
             <player-score id="player-score" data-player="playerTwo"></player-score>
           </div>
-          <player-button-column data-player="playerTwo" data-active="true"></player-button-column>
+          <player-button-column data-player="playerTwo" data-active="true" data-testid="player-column-2"></player-button-column>
         </div>
         <show-result id="result"></show-result>
       </div>
