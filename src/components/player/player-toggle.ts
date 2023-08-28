@@ -1,4 +1,5 @@
 import { PlayerNumber } from '../../constants';
+import type { PlayerState, StateUpdatedEvent } from '../../state';
 import { State, setPlayerIsHuman } from '../../state';
 
 const template = document.createElement('template');
@@ -61,6 +62,11 @@ export class PlayerToggle extends HTMLElement {
       title.textContent = `${State[this.player].name}`;
     }
     this.setIsHuman(State[this.player].isHuman);
+    window.addEventListener('state-updated', (event) => {
+      if ((event as StateUpdatedEvent).detail?.property === this.player) {
+        this.setIsHuman(((event as StateUpdatedEvent).detail.value as PlayerState).isHuman);
+      }
+    });
     this.shadowRoot?.querySelector('.player-human')?.addEventListener('click', () => {
       this.setIsHuman(true);
     });
