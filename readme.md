@@ -43,6 +43,8 @@ For e2e tests using Playwright:
 pnpm run test:e2e
 ```
 
+Tests can also be run on Github through a [Github Action](https://github.com/flipswitchingmonkey/db-rpsls/actions/workflows/tests.yml)
+
 ## How to play
 
 This game follows the simple rules of Rock, Paper, Scissors, with extra "Weapons" as described here: https://en.wikipedia.org/wiki/Rock_paper_scissors#Additional_weapons
