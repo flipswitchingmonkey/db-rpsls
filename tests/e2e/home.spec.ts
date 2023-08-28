@@ -112,3 +112,23 @@ test('Play a round and reset result', async ({ page }) => {
   await resetButton.click();
   await expect(page.locator('#show-round')).toContainText('1');
 });
+
+test('Play like a robot', async ({ page }) => {
+  await page.goto('/');
+  const p1 = page.locator('#player-name-one .player-computer').first();
+  const p2 = page.locator('#player-name-two .player-computer').first();
+  const robot = page.locator('#robot-icon');
+  await expect(robot).not.toBeVisible();
+  await p1.click();
+  await p2.click();
+  await expect(robot).toBeVisible();
+  const modal = page.locator('show-result .modal');
+  await expect(modal).not.toBeVisible();
+  await robot.click();
+  await Promise.race([page.waitForTimeout(1000), page.waitForSelector('show-result .modal')]);
+  await expect(modal).toBeVisible();
+  await modal.click();
+  await expect(modal).not.toBeVisible();
+  await expect(page.locator('#show-round')).toBeVisible();
+  await expect(page.locator('#show-round')).toContainText('2');
+});
