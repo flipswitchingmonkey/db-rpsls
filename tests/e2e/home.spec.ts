@@ -17,28 +17,22 @@ test('has all player buttons', async ({ page }) => {
   expect(selectCardsP2).toHaveLength(5);
   const selectedCards = await page.$$('selected-card-button');
   expect(selectedCards).toHaveLength(2);
-  expect(await page.locator('#player-name[data-player="playerOne"]').isVisible()).toBeTruthy();
-  expect(await page.locator('#player-name[data-player="playerTwo"]').isVisible()).toBeTruthy();
+  const p1 = page.locator('#player-name-one[data-player="playerOne"]');
+  const p2 = page.locator('#player-name-two[data-player="playerTwo"]');
+  await expect(p1).toBeVisible();
+  await expect(p2).toBeVisible();
   expect(
-    await page
-      .locator('#player-name[data-player="playerOne"] #human')
-      .evaluate((e) => e.classList.contains('active')),
+    await p1.locator('.player-human').evaluate((e) => e.classList.contains('active')),
   ).toBeTruthy();
   expect(
-    await page
-      .locator('#player-name[data-player="playerOne"] #computer')
-      .evaluate((e) => !e.classList.contains('active')),
+    await p1.locator('.player-computer').evaluate((e) => !e.classList.contains('active')),
   ).toBeTruthy();
 
   expect(
-    await page
-      .locator('#player-name[data-player="playerTwo"] #human')
-      .evaluate((e) => !e.classList.contains('active')),
+    await p2.locator('.player-human').evaluate((e) => !e.classList.contains('active')),
   ).toBeTruthy();
   expect(
-    await page
-      .locator('#player-name[data-player="playerTwo"] #computer')
-      .evaluate((e) => e.classList.contains('active')),
+    await p2.locator('.player-computer').evaluate((e) => e.classList.contains('active')),
   ).toBeTruthy();
 });
 
@@ -115,8 +109,8 @@ test('Play a round and reset result', async ({ page }) => {
 
 test('Play like a robot', async ({ page }) => {
   await page.goto('/');
-  const p1 = page.locator('#player-name-one .player-computer').first();
-  const p2 = page.locator('#player-name-two .player-computer').first();
+  const p1 = page.locator('.player-name-one .player-computer').first();
+  const p2 = page.locator('.player-name-two .player-computer').first();
   const robot = page.locator('#robot-icon');
   await expect(robot).not.toBeVisible();
   await p1.click();
