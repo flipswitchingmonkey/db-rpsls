@@ -1,5 +1,5 @@
-import type { StateUpdatedEvent } from '../state';
-import { State, resetRound } from '../state';
+import type { StateUpdatedEvent } from '../../state';
+import { State, resetRound } from '../../state';
 
 const template = document.createElement('template');
 template.innerHTML = /* html */ `
@@ -17,6 +17,8 @@ template.innerHTML = /* html */ `
   top: 0;
   left: 0;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .modal-visible {
@@ -24,6 +26,7 @@ template.innerHTML = /* html */ `
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1000;
+  opacity: 1;
 }
 
 .modal {
@@ -55,16 +58,28 @@ template.innerHTML = /* html */ `
   padding: 5px 15px;
 }
 
-.win {
-  transform: scale(1.1);
+
+#icon1.tie {
+  transform: scale(-1.0, 1.0);
 }
 
-.lose {
-  transform: scale(0.9);
+#icon1.win {
+  transform: scale(-1.1, 1.1);
+}
+
+#icon1.lose {
+  transform: scale(-0.9, 0.9);
   filter: grayscale(100%);
 }
 
+#icon2.win {
+  transform: scale(1.1);
+}
 
+#icon2.lose {
+  transform: scale(0.9);
+  filter: grayscale(100%);
+}
 
   </style>
   <div class="modal-container">
@@ -124,6 +139,8 @@ export class ShowResult extends HTMLElement {
           elementResult.textContent = `${State.playerTwo.name} wins!`;
           break;
         case 'tie':
+          classesIcon1 = 'tie';
+          classesIcon2 = 'tie';
           elementResult.textContent = "It's a tie!";
           break;
       }

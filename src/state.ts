@@ -1,28 +1,28 @@
-import { PlayerNumber, type SelectionType } from './constants'
-import type { AllIconNames } from './icons'
+import { PlayerNumber, type SelectionType } from './constants';
+import type { AllIconNames } from './icons';
 
 export interface PlayerState {
-  name: string
-  isHuman: boolean
-  score: number
-  selected: null | SelectionType | AllIconNames
+  name: string;
+  isHuman: boolean;
+  score: number;
+  selected: null | SelectionType | AllIconNames;
 }
 
 export interface StateObject {
-  playerOne: PlayerState
-  playerTwo: PlayerState
-  round: number
-  result: null | string
-  history: string[]
-  [key: string]: unknown
+  playerOne: PlayerState;
+  playerTwo: PlayerState;
+  round: number;
+  result: null | string;
+  history: string[];
+  [key: string]: unknown;
 }
 
 export type StateUpdatedEvent = Event & {
   detail: {
-    property: keyof StateObject
-    value: unknown
-  }
-}
+    property: keyof StateObject;
+    value: unknown;
+  };
+};
 
 const stateObject: StateObject = {
   playerOne: {
@@ -40,25 +40,25 @@ const stateObject: StateObject = {
   round: 1,
   result: null,
   history: [],
-}
+};
 
 export function isStateObject(stateObject: unknown): stateObject is StateObject {
-  const candidate = stateObject as StateObject
+  const candidate = stateObject as StateObject;
   return (
     candidate.playerOne != null &&
     candidate.playerTwo != null &&
     candidate.round != null &&
     candidate.result !== undefined
-  )
+  );
 }
 
 export function loadStateFromLocalStorage() {
-  const storedState = localStorage.getItem('state')
+  const storedState = localStorage.getItem('state');
   try {
     if (storedState != null) {
-      const parsedState = JSON.parse(storedState) as unknown
+      const parsedState = JSON.parse(storedState) as unknown;
       if (isStateObject(parsedState)) {
-        Object.assign(stateObject, parsedState)
+        Object.assign(stateObject, parsedState);
       }
     }
   } catch {
@@ -67,13 +67,13 @@ export function loadStateFromLocalStorage() {
 }
 
 // on first run, read from localStorage
-loadStateFromLocalStorage()
+loadStateFromLocalStorage();
 
 export function saveStateToLocalStorage() {
-  stateObject.playerOne.selected = null
-  stateObject.playerTwo.selected = null
-  stateObject.result = null
-  localStorage.setItem('state', JSON.stringify(stateObject))
+  stateObject.playerOne.selected = null;
+  stateObject.playerTwo.selected = null;
+  stateObject.result = null;
+  localStorage.setItem('state', JSON.stringify(stateObject));
 }
 
 export function resetState() {
@@ -82,32 +82,32 @@ export function resetState() {
     isHuman: true,
     score: 0,
     selected: null,
-  }
+  };
   stateObject.playerTwo = {
     name: 'Player Two',
     isHuman: false,
     score: 0,
     selected: null,
-  }
-  stateObject.history = []
-  stateObject.round = 1
-  stateObject.result = null
+  };
+  stateObject.history = [];
+  stateObject.round = 1;
+  stateObject.result = null;
   // trigger state-updated event
-  State.playerOne = stateObject.playerOne
-  State.playerTwo = stateObject.playerTwo
-  State.round = stateObject.round
-  State.result = null
-  saveStateToLocalStorage()
+  State.playerOne = stateObject.playerOne;
+  State.playerTwo = stateObject.playerTwo;
+  State.round = stateObject.round;
+  State.result = null;
+  saveStateToLocalStorage();
 }
 
 export const State = new Proxy(stateObject, {
   set: (target, property, value) => {
     if (typeof property === 'string' && property in target) {
-      target[property] = value
+      target[property] = value;
       window.dispatchEvent(
         new CustomEvent<{
-          property: keyof StateObject
-          value: unknown
+          property: keyof StateObject;
+          value: unknown;
         }>('state-updated', {
           detail: {
             property,
@@ -117,35 +117,35 @@ export const State = new Proxy(stateObject, {
           bubbles: true,
           composed: true,
         }) as StateUpdatedEvent,
-      )
+      );
     }
-    return true
+    return true;
   },
-})
+});
 
 export function setPlayerScore(player: PlayerNumber, score: number) {
-  State[player] = { ...State[player], score }
+  State[player] = { ...State[player], score };
 }
 export function setPlayerSelectedCard(
   player: PlayerNumber,
   selected: AllIconNames | SelectionType | null,
 ) {
-  State[player] = { ...State[player], selected }
+  State[player] = { ...State[player], selected };
 }
 export function setPlayerIsHuman(player: PlayerNumber, isHuman: boolean) {
-  State[player] = { ...State[player], isHuman }
+  State[player] = { ...State[player], isHuman };
 }
 export function increaseRound() {
-  State.round++
+  State.round++;
 }
 
 export function resetRound() {
-  State.result = null
-  setPlayerSelectedCard(PlayerNumber.One, null)
-  setPlayerSelectedCard(PlayerNumber.Two, null)
+  State.result = null;
+  setPlayerSelectedCard(PlayerNumber.One, null);
+  setPlayerSelectedCard(PlayerNumber.Two, null);
 }
 
 export function snapshotState() {
-  const snapshot = JSON.stringify({ ...stateObject, history: [] })
-  State.history.push(snapshot)
+  const snapshot = JSON.stringify({ ...stateObject, history: [] });
+  State.history.push(snapshot);
 }

@@ -25,10 +25,7 @@
     "forceConsistentCasingInFileNames": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleDetection": "force",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "moduleDetection": "force"
   },
   "include": ["src", "tests", "./playwright.config.ts"],
   "exclude": ["node_modules", "dist", "coverage"]

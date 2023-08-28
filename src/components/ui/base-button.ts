@@ -1,7 +1,7 @@
-const template = document.createElement('template')
+const template = document.createElement('template');
 template.innerHTML = /* html */ `
   <style>
-.bt {
+.base-button {
   background-color: #134f55;
   border: 1px solid #014a50;
   border-radius: 5px;
@@ -13,23 +13,23 @@ template.innerHTML = /* html */ `
   margin-top: 10px;
 }
 
-.bt:hover {
+.base-button:hover {
   background-color: #014a50;
   color: #FFF;
   cursor: pointer;
 }
   </style>
-  <button class="bt">
+  <button class="base-button">
     <slot></slot>
   </button>
-`
+`;
 
 export class BaseButton extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({ mode: 'open' })
-    const clonedTemplate = template.content.cloneNode(true)
-    this.shadowRoot?.appendChild(clonedTemplate)
+    this.attachShadow({ mode: 'open' });
+    const clonedTemplate = template.content.cloneNode(true);
+    this.shadowRoot?.appendChild(clonedTemplate);
   }
 }
 
-customElements.define('base-button', BaseButton)
+customElements.define('base-button', BaseButton);

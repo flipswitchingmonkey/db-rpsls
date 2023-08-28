@@ -1,4 +1,4 @@
-import { State, isStateObject } from '../state';
+import { State, isStateObject } from '../../state';
 
 const template = document.createElement('template');
 template.innerHTML = /* html */ `
@@ -16,6 +16,8 @@ template.innerHTML = /* html */ `
   top: 0;
   left: 0;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .modal-visible {
@@ -23,6 +25,7 @@ template.innerHTML = /* html */ `
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1000;
+  opacity: 1.0;
 }
 
 .modal {
@@ -65,7 +68,7 @@ td {
   padding: 5px 5px;
 }
   </style>
-  <base-button id="show-history">Show History</base-button>
+  <base-button id="show-history" title="Show History">Show History</base-button>
     <div class="modal-container">
       <div class="modal">
         <table id="history">

@@ -1,7 +1,7 @@
-import { PlayerNumber } from '../constants'
-import type { StateUpdatedEvent, PlayerState } from '../state'
+import { PlayerNumber } from '../../constants';
+import type { StateUpdatedEvent, PlayerState } from '../../state';
 
-const template = document.createElement('template')
+const template = document.createElement('template');
 template.innerHTML = /* html */ `
   <style>
     .button-column {
@@ -23,41 +23,41 @@ template.innerHTML = /* html */ `
     <select-card-button data-icon="lizard" data-indent="30%"></select-card-button>
     <select-card-button data-icon="spock" data-indent="100%"></select-card-button>
   </div>
-`
+`;
 
 export class PlayerButtonColumn extends HTMLElement {
-  player: PlayerNumber
-  active: boolean = true
+  player: PlayerNumber;
+  active: boolean = true;
 
   constructor() {
-    super()
+    super();
     this.player = this.hasAttribute('data-player')
       ? (this.getAttribute('data-player') as PlayerNumber)
-      : PlayerNumber.One
-    this.attachShadow({ mode: 'open' })
-    this.buildColumn()
+      : PlayerNumber.One;
+    this.attachShadow({ mode: 'open' });
+    this.buildColumn();
 
     window.addEventListener('state-updated', (event): void => {
       if (
         (event as StateUpdatedEvent).detail?.property === this.player &&
         ((event as StateUpdatedEvent).detail?.value as PlayerState).isHuman !== this.active
       ) {
-        this.active = ((event as StateUpdatedEvent).detail?.value as PlayerState).isHuman
-        this.buildColumn()
+        this.active = ((event as StateUpdatedEvent).detail?.value as PlayerState).isHuman;
+        this.buildColumn();
       }
-    })
+    });
   }
 
   buildColumn() {
-    this.shadowRoot?.querySelector('.button-column')?.remove()
-    const clonedTemplate = template.content.cloneNode(true)
-    ;(clonedTemplate as Element).querySelectorAll('select-card-button').forEach((element) => {
-      element.setAttribute('data-player', this.player)
-      element.setAttribute('data-active', this.active.toString())
-    })
-    console.log('buildColumn')
-    this.shadowRoot?.appendChild(clonedTemplate)
+    this.shadowRoot?.querySelector('.button-column')?.remove();
+    const clonedTemplate = template.content.cloneNode(true);
+    (clonedTemplate as Element).querySelectorAll('select-card-button').forEach((element) => {
+      element.setAttribute('data-player', this.player);
+      element.setAttribute('data-active', this.active.toString());
+    });
+    console.log('buildColumn');
+    this.shadowRoot?.appendChild(clonedTemplate);
   }
 }
 
-customElements.define('player-button-column', PlayerButtonColumn)
+customElements.define('player-button-column', PlayerButtonColumn);

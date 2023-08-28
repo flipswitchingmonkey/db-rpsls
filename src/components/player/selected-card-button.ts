@@ -1,10 +1,10 @@
-import { DefaultIconName, PlayerNumber } from '../constants'
-import type { AllIconNames } from '../icons'
-import type { PlayerState, StateUpdatedEvent } from '../state'
-import { BaseSvgButton } from './base-svg-button'
+import { DefaultIconName, PlayerNumber } from '../../constants';
+import type { AllIconNames } from '../../icons';
+import type { PlayerState, StateUpdatedEvent } from '../../state';
+import { BaseSvgButton } from './base-svg-button';
 
 function getStyle(flip: '-' | '') {
-  const style = document.createElement('style')
+  const style = document.createElement('style');
   style.textContent = /* css */ `
 .wrapper {
   display: flex;
@@ -32,14 +32,14 @@ svg {
     transform: scale(${flip}1.0, 1.0);
   }
 }
-`
-  return style
+`;
+  return style;
 }
 
 export class SelectedCardButton extends BaseSvgButton {
   constructor() {
-    super()
-    this.active = true
+    super();
+    this.active = true;
     window.addEventListener('state-updated', (event): void => {
       if (
         (event as StateUpdatedEvent).detail?.property === this.player &&
@@ -48,17 +48,18 @@ export class SelectedCardButton extends BaseSvgButton {
         const selectedName =
           ((event as StateUpdatedEvent).detail?.value as PlayerState).selected == null
             ? DefaultIconName
-            : (((event as StateUpdatedEvent).detail?.value as PlayerState).selected as AllIconNames)
-        this.swapIcon(selectedName)
+            : (((event as StateUpdatedEvent).detail?.value as PlayerState)
+                .selected as AllIconNames);
+        this.swapIcon(selectedName);
       }
-    })
+    });
   }
 
   connectedCallback() {
-    const flip = this.player === PlayerNumber.One ? '-' : ''
-    super.connectedCallback()
-    this.shadowRoot?.append(getStyle(flip))
+    const flip = this.player === PlayerNumber.One ? '-' : '';
+    super.connectedCallback();
+    this.shadowRoot?.append(getStyle(flip));
   }
 }
 
-customElements.define('selected-card-button', SelectedCardButton)
+customElements.define('selected-card-button', SelectedCardButton);

@@ -2,53 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/scissor.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors and then some</title>
-    <link rel="stylesheet" href="style.css" />
-    <script type="module" src="/src/components/test-button.ts"></script>
-    <script type="module" src="/src/components/base-button.ts"></script>
-    <script type="module" src="/src/components/base-svg-button.ts"></script>
-    <script type="module" src="/src/components/select-card-button.ts"></script>
-    <script type="module" src="/src/components/selected-card-button.ts"></script>
-    <script type="module" src="/src/components/player-button-column.ts"></script>
-    <script type="module" src="/src/components/player-score.ts"></script>
-    <script type="module" src="/src/components/player-toggle.ts"></script>
-    <script type="module" src="/src/components/show-round.ts"></script>
-    <script type="module" src="/src/components/show-result.ts"></script>
-    <script type="module" src="/src/components/reset-state-button.ts"></script>
-    <script type="module" src="/src/components/show-history.ts"></script>
-    <script defer type="module" src="/src/main.ts"></script>
+    <link rel="icon" type="image/svg+xml" href="/scissor.svg" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="module" src="/src/components/ui/robo-run-button.ts"></script>
+    <script type="module" src="/src/components/ui/base-button.ts"></script>
+    <script type="module" src="/src/components/ui/show-result.ts"></script>
+    <script type="module" src="/src/components/ui/reset-state-button.ts"></script>
+    <script type="module" src="/src/components/ui/show-history.ts"></script>
+    <script type="module" src="/src/components/ui/show-round.ts"></script>
+    <script type="module" src="/src/components/player/base-svg-button.ts"></script>
+    <script type="module" src="/src/components/player/select-card-button.ts"></script>
+    <script type="module" src="/src/components/player/selected-card-button.ts"></script>
+    <script type="module" src="/src/components/player/player-button-column.ts"></script>
+    <script type="module" src="/src/components/player/player-score.ts"></script>
+    <script type="module" src="/src/components/player/player-toggle.ts"></script>
+    <script async type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <!-- <div id="app"></div> -->
     <div class="container">
       <h1>Rock Paper Scissors</h1>
       <span class="h1small">and some more</span>
-      <div style="display: flex;">
+      <div style="display: flex">
         <reset-state-button></reset-state-button>
         <show-history></show-history>
       </div>
       <div class="main">
         <div class="players">
-          <player-button-column data-player="playerOne" data-active="true" data-testid="player-column-1"></player-button-column>
+          <player-button-column
+            data-player="playerOne"
+            data-active="true"
+            data-testid="player-column-1"
+          ></player-button-column>
           <div class="players-inner playerOne">
-            <player-toggle id="player-name" data-player="playerOne"></player-toggle>
-            <selected-card-button id="player-card" data-player="playerOne"></selected-card-button>
-            <player-score id="player-score" data-player="playerOne"></player-score>
+            <player-toggle id="player-name-one" data-player="playerOne"></player-toggle>
+            <selected-card-button
+              id="player-card-one"
+              data-player="playerOne"
+            ></selected-card-button>
+            <player-score id="player-score-one" data-player="playerOne"></player-score>
           </div>
           <div id="midsection">
             <show-round id="round"></show-round>
-            <eval-button>Test</eval-button>
+            <robo-run-button></robo-run-button>
           </div>
           <div class="players-inner playerTwo">
-            <player-toggle id="player-name" data-player="playerTwo"></player-toggle>
-            <selected-card-button id="player-card" data-player="playerTwo"></selected-card-button>
-            <player-score id="player-score" data-player="playerTwo"></player-score>
+            <player-toggle id="player-name-two" data-player="playerTwo"></player-toggle>
+            <selected-card-button
+              id="player-card-two"
+              data-player="playerTwo"
+            ></selected-card-button>
+            <player-score id="player-score-two" data-player="playerTwo"></player-score>
           </div>
-          <player-button-column data-player="playerTwo" data-active="true" data-testid="player-column-2"></player-button-column>
+          <player-button-column
+            data-player="playerTwo"
+            data-active="true"
+            data-testid="player-column-2"
+          ></player-button-column>
         </div>
         <show-result id="result"></show-result>
       </div>
+    </div>
   </body>
 </html>

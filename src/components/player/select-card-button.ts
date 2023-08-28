@@ -1,10 +1,10 @@
-import { PlayerNumber } from '../constants'
-import { playThisRound } from '../main'
-import { State, setPlayerSelectedCard } from '../state'
-import { BaseSvgButton } from './base-svg-button'
+import { PlayerNumber } from '../../constants';
+import { playThisRound } from '../../main';
+import { State, setPlayerSelectedCard } from '../../state';
+import { BaseSvgButton } from './base-svg-button';
 
 function getStyle(side: 'left' | 'right', indent: string, flip: '-' | '', active: boolean) {
-  const style = document.createElement('style')
+  const style = document.createElement('style');
   style.textContent = /* css */ `
   .wrapper {
     display: flex;
@@ -52,31 +52,31 @@ function getStyle(side: 'left' | 'right', indent: string, flip: '-' | '', active
           : ''
       }
   }
-  `
-  return style
+  `;
+  return style;
 }
 
 export class SelectCardButton extends BaseSvgButton {
   constructor() {
-    super()
+    super();
     this.onclick = () => {
-      if (!this.active) return
-      console.log(`Play icon ${this.iconName} clicked.`)
-      setPlayerSelectedCard(this.player, this.iconName)
-      playThisRound()
-    }
+      if (!this.active) return;
+      console.log(`Play icon ${this.iconName} clicked.`);
+      setPlayerSelectedCard(this.player, this.iconName);
+      playThisRound();
+    };
   }
 
   connectedCallback() {
-    this.active = State[this.player].isHuman
+    this.active = State[this.player].isHuman;
     const indent = this.hasAttribute('data-indent')
       ? (this.getAttribute('data-indent') as string)
-      : '0'
-    const side = this.player === PlayerNumber.One ? 'left' : 'right'
-    const flip = this.player === PlayerNumber.One ? '-' : ''
-    super.connectedCallback()
-    this.shadowRoot?.append(getStyle(side, indent, flip, this.active))
+      : '0';
+    const side = this.player === PlayerNumber.One ? 'left' : 'right';
+    const flip = this.player === PlayerNumber.One ? '-' : '';
+    super.connectedCallback();
+    this.shadowRoot?.append(getStyle(side, indent, flip, this.active));
   }
 }
 
-customElements.define('select-card-button', SelectCardButton)
+customElements.define('select-card-button', SelectCardButton);
