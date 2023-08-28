@@ -36,8 +36,8 @@ export function evalCurrentState(): void {
   } else if (currentResult === ResultType.Lose) {
     State.playerTwo = { ...State.playerTwo, score: State.playerTwo.score + 1 };
   }
-  increaseRound();
   snapshotState();
+  increaseRound();
   saveStateToLocalStorage();
 }
 
