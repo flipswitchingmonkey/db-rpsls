@@ -55,7 +55,6 @@ export class PlayerButtonColumn extends HTMLElement {
       element.setAttribute('data-player', this.player);
       element.setAttribute('data-active', this.active.toString());
     });
-    console.log('buildColumn');
     this.shadowRoot?.appendChild(clonedTemplate);
   }
 }
