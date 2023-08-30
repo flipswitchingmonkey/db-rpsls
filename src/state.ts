@@ -132,8 +132,12 @@ export function setPlayerSelectedCard(
 ) {
   State[player] = { ...State[player], selected };
 }
-export function setPlayerIsHuman(player: PlayerNumber, isHuman: boolean) {
-  State[player] = { ...State[player], isHuman };
+export function setPlayerIsHuman(player: PlayerNumber, isHuman: boolean, triggerEvent = true) {
+  if (triggerEvent) {
+    State[player] = { ...State[player], isHuman };
+  } else {
+    stateObject[player].isHuman = isHuman;
+  }
 }
 export function increaseRound() {
   State.round++;

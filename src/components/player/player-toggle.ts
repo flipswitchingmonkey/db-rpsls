@@ -64,7 +64,7 @@ export class PlayerToggle extends HTMLElement {
     this.setIsHuman(State[this.player].isHuman);
     window.addEventListener('state-updated', (event) => {
       if ((event as StateUpdatedEvent).detail?.property === this.player) {
-        this.setIsHuman(((event as StateUpdatedEvent).detail.value as PlayerState).isHuman);
+        this.setIsHuman(((event as StateUpdatedEvent).detail.value as PlayerState).isHuman, false);
       }
     });
     this.shadowRoot?.querySelector('.player-human')?.addEventListener('click', () => {
@@ -75,8 +75,8 @@ export class PlayerToggle extends HTMLElement {
     });
   }
 
-  setIsHuman(active: boolean) {
-    setPlayerIsHuman(this.player, active);
+  setIsHuman(active: boolean, triggerEvent = true) {
+    setPlayerIsHuman(this.player, active, triggerEvent);
     if (State[this.player].isHuman) {
       this.shadowRoot?.querySelector('.player-human')?.classList.add('active');
       this.shadowRoot?.querySelector('.player-computer')?.classList.remove('active');
